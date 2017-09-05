@@ -1,5 +1,6 @@
 import React from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const ArtistStyles = styled.div`
   width: 30%;
@@ -14,12 +15,15 @@ const ArtistStyles = styled.div`
   }
 `;
 
+
 const ArtistCard = (props) => {
   const artist = props.artist;
   return (
     <ArtistStyles>
-      <img src={artist.photo_url} alt={artist.name} />
-      <h3>{artist.name}</h3>
+        <Link key={artist.id} to={`/artist/${artist.id}`}>
+            <img src={artist.photo_url} alt={artist.name} />
+            <h3>{artist.name}</h3>
+        </Link>
     </ArtistStyles>
   );
 };
