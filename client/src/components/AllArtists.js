@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import ArtistsCard from './ArtistCard';
+import ArtistCard from './ArtistCard';
 import styled from 'styled-components';
 
 const ArtistListStyles = styled.div`
@@ -9,41 +9,44 @@ const ArtistListStyles = styled.div`
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-` 
+`;
 
-
-class AllArtists extends Component {
-    constructor() {
-        super();
-        this.state = {
-            artists: []
-        }
+class AllArtists extends Component{
+  constructor(){
+    super();
+    this.state = {
+      error: '',
+      artists: []
     }
+  }
 
-    componentWillMount() {
-        this._fetchArtists();
-    }
+  componentWillMount(){
+    this._fetchArtists();
+  }
 
-    _fetchArtists = async () => {
-        try {
-            const response = await axios.get('/api/artists');
-            const artists = response.data;
-            this.setState({artists});
-        } catch (err) {
-            this.setState({error: err})
-        }
+  _fetchArtists = async () => {
+    try {
+      const response = await axios.get('/api/artists');
+      const artists = response.data;
+      this.setState({artists});
+    } catch (err) {
+      this.setState({error: err})
     }
+  }
 
-    render() {
-        return (
-            <ArtistListStyles>
-                {this.state.artists.map((artist) => (
-                        <ArtistsCard key={artist.id} artist={artist} />
-                    )
-                )}
-            </ArtistListStyles>
-        );
+  render(){
+     if (this.state.error){
+       console.log(this.state.error)
+      return <h1>YOU MUST LOGIN</h1>
     }
+    return (
+      <ArtistListStyles>
+        {this.state.artists.map((artist) => (
+          <ArtistCard key={artist.id} artist={artist} />
+        ))}
+      </ArtistListStyles>
+    )
+  }
 }
 
 export default AllArtists;

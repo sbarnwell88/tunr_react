@@ -50,7 +50,4 @@ class Artist extends Component{
   }
 }
 
-export default Artist;
-
-
-
+export default Artist
